@@ -67,9 +67,9 @@ function guardarFoto($nombreInputDelFile,$email){
 }
 
 //traerTodos()
-//traerUltimoID()
 //existeMail()
 //validarLogin()
+//traerUltimoID()
+//traerPorID($id)
 //loguear()
 //estaLogueado()
-//traerPorID($id)
