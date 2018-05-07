@@ -1,4 +1,4 @@
-
+<?php require_once('funciones.php') ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head>
@@ -20,34 +20,29 @@
             $nombre = trim($_POST['nombre']);
             $email = trim($_POST['email']);
             $pais = $_POST['pais'];
-            $pass = $_POST['pass'];
-            $pass2 = $_POST['pass2'];
 
-            if ($nombre == '') {
-                $errores['nombre'] = 'Por favor completa tu nombre';
-            }
-            if ($email == '') {
-                $errores['email'] = 'Por favor completa tu email';
-            }elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $errores['email'] = 'Por favor completa tu email, con un formato valido';
-            }
-            if ($pass == '' || $pass2 == '' ) {
-                $errores['pass'] = 'Por favor completa tus contraseñas';
-            }elseif ($pass != $pass2) {
-                $errores['pass'] = 'Tus contraseñas deben coinsidir';
-            }
-            if ($pais == '') {
-                $errores['pais'] = 'Por favor completa de que país sos';
-            }
+            $errores = validar($_POST,'avatar');
+
+            if (empty($errores)) {
+                $usuario = crearUsuario($_POST);
+
+                $errores = guardarFoto('avatar',$usuario['email'] );
+
+                if (count($errores) == 0) {
+                    guardarUsuario($usuario);
+                    header('location:felicidades.php');
+                    exit;
+                }
 
 
+            }
 
         }
 
          ?>
          <br>
          <br>
-        <form style="text-align:center;"  method="post" action="">
+        <form style="text-align:center;"  method="post" enctype="multipart/form-data">
             <label for="">nombre</label>
             <input type="text" name="nombre" value="<?=$nombre?>">
             <br>
@@ -57,11 +52,11 @@
             <br>
             <br>
             <label for="">contraseña</label>
-            <input type="text" name="pass" value="<?=$email?>">
+            <input type="text" name="pass" value="">
             <br>
             <br>
             <label for="">repetir contraseña</label>
-            <input type="text" name="pass2" value="<?=$email?>">
+            <input type="text" name="pass2" value="">
             <br>
             <br>
             <label for="">pais</label>
@@ -75,6 +70,9 @@
             <option value="<?=$value?>"><?=$value?></option>
         <?php endforeach; ?>
             </select>
+            <br>
+            <br>
+            <input type="file" name="avatar" value="">
             <br>
             <br>
             <button type="submit">Registrarse</button>
