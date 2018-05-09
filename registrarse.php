@@ -9,6 +9,10 @@
 
         <?php
 
+        if (estaLogueado()) {
+            header('location:felicidades.php');
+        }
+
         $paises = ['Argentina', 'Colombia', 'Sin mundial'];
 
         $nombre = '';
@@ -86,6 +90,11 @@
                 <?php endforeach; ?>
             </ul>
         <?php endif; ?>
+
+
+        <hr>
+
+        <p>Ya tengo usuario <a href="login.php">Login</a> </p>
 
 
     </body>
